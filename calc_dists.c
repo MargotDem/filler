@@ -12,7 +12,7 @@
 
 #include "filler.h"
 
-void	check_square(t_queue *queue, short value, t_grid_square *square)
+static void	check_square(t_queue *queue, short value, t_grid_square *square)
 {
 	if (square->value == EMPTY)
 	{
@@ -21,16 +21,41 @@ void	check_square(t_queue *queue, short value, t_grid_square *square)
 	}
 }
 
-void	handle_square(t_data *data, t_grid_square *square, t_queue *queue)
+void	handle_square2(t_data *data, t_grid_square *square, t_queue *queue)
 {
-	unsigned int	line;
 	unsigned int	col;
 	unsigned int	x;
 	unsigned int	y;
 	unsigned int	i;
 	t_grid_square	*grid;
 
-	line = data->line;
+	col = data->col;
+	x = square->x;
+	y = square->y;
+	grid = data->grid;
+	if (x > 0)
+		check_square(queue, square->value, &grid[(col * y + x - 1)]);
+	if (x + 1 < col)
+		check_square(queue, square->value, &grid[(col * y + x + 1)]);
+	if (y + 1 < data->line)
+	{
+		i = y + 1;
+		if (x > 0)
+			check_square(queue, square->value, &grid[(col * i + x - 1)]);
+		check_square(queue, square->value, &grid[(col * i + x)]);
+		if (x + 1 < col)
+			check_square(queue, square->value, &grid[(col * i + x + 1)]);
+	}
+}
+
+void	handle_square(t_data *data, t_grid_square *square, t_queue *queue)
+{
+	unsigned int	col;
+	unsigned int	x;
+	unsigned int	y;
+	unsigned int	i;
+	t_grid_square	*grid;
+
 	col = data->col;
 	x = square->x;
 	y = square->y;
@@ -44,20 +69,18 @@ void	handle_square(t_data *data, t_grid_square *square, t_queue *queue)
 		if (x + 1 < col)
 			check_square(queue, square->value, &grid[(col * i + x + 1)]);
 	}
+	handle_square2(data, square, queue);
+}
 
-	if (x > 0)
-		check_square(queue, square->value, &grid[(col * y + x - 1)]);
-	if (x + 1 < col)
-		check_square(queue, square->value, &grid[(col * y + x + 1)]);
+void	handle_every_square(t_queue *queue, t_data *data)
+{
+	int	i;
 
-	if (y + 1 < line)
+	i = 0;
+	while (i < queue->counter)
 	{
-		i = y + 1;
-		if (x > 0)
-			check_square(queue, square->value, &grid[(col * i + x - 1)]);
-		check_square(queue, square->value, &grid[(col * i + x)]);
-		if (x + 1 < col)
-			check_square(queue, square->value, &grid[(col * i + x + 1)]);
+		handle_square(data, queue->arr[i], queue);
+		i++;
 	}
 }
 
@@ -67,7 +90,7 @@ void	calc_dists(t_data *data)
 	unsigned int	col;
 	unsigned int	i;
 	unsigned int	j;
-	t_queue	*queue;
+	t_queue			*queue;
 
 	line = data->line;
 	col = data->col;
@@ -84,12 +107,7 @@ void	calc_dists(t_data *data)
 		}
 		i++;
 	}
-	i = 0;
-	while ((int)i < queue->counter)
-	{
-		handle_square(data, queue->arr[i], queue);
-		i++;
-	}
+	handle_every_square(queue, data);
 	free(queue->arr);
 	free(queue);
 }

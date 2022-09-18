@@ -27,20 +27,20 @@ typedef struct s_piece_list {
 	struct s_piece_list	*prev;
 	unsigned short		x;
 	unsigned short		y;
-} t_piece_list;
+}				t_piece_list;
 
 typedef struct s_piece {
 	unsigned short	line;
 	unsigned short	col;
 	char			*piece;
 	t_piece_list	*list;
-} t_piece;
+}				t_piece;
 
 typedef struct s_grid_square {
 	unsigned short	x;
 	unsigned short	y;
-	short	value;
-} t_grid_square;
+	short			value;
+}				t_grid_square;
 
 typedef struct s_data
 {
@@ -55,10 +55,10 @@ typedef struct s_data
 }	t_data;
 
 typedef struct s_queue {
-	int	counter;
-	int	size;
+	int				counter;
+	int				size;
 	t_grid_square	**arr;
-}	t_queue;
+}				t_queue;
 
 typedef struct s_solution {
 	unsigned short	sum;
@@ -83,7 +83,8 @@ void	create_grid(t_data *data);
 void	init_queue(t_queue **queue, int size);
 void	push_queue(t_queue *queue, t_grid_square *square);
 void	find_best_move(t_data *data, t_piece *piece);
-void	try_piece(t_data *data, unsigned int i, unsigned int j, t_piece *piece, t_solution *solution);
+void	try_piece(t_data *data, unsigned int *ij, t_piece *piece, \
+	t_solution *solution);
 void	calc_dists(t_data *data);
 t_piece	*get_piece(void);
 int		nb_len(int n);

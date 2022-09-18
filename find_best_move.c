@@ -26,33 +26,26 @@ t_solution	*create_solution(void)
 
 void	find_best_move(t_data *data, t_piece *piece)
 {
-	unsigned int	line;
-	unsigned int	col;
-	unsigned int	i;
-	unsigned int	j;
+	unsigned int	ij[2];
 	unsigned int	place;
 	t_grid_square	*grid;
 	t_solution		*solution;
 
-	line = data->line;
-	col = data->col;
 	grid = data->grid;
 	solution = create_solution();
-	i = 0;
-
-	while (i < line)
+	ij[0] = 0;
+	while (ij[0] < data->line)
 	{
-		j = 0;
-		while (j < col)
+		ij[1] = 0;
+		while (ij[1] < data->col)
 		{
-			place = col * i + j;
+			place = data->col * ij[0] + ij[1];
 			if ((grid[place]).value == US)
-				try_piece(data, i, j, piece, solution);
-			j++;
+				try_piece(data, ij, piece, solution);
+			(ij[1])++;
 		}
-		i++;
+		(ij[0])++;
 	}
-	//place_piece_grid(solution, data);
 	place_piece(solution);
 	free(solution);
 }

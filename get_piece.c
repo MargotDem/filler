@@ -25,38 +25,28 @@ void	add_block(t_piece_list *list, t_piece_list *new)
 	new->prev = prev;
 }
 
-void	print_piece(t_piece_list *piece)
+void	handle_new_block(unsigned short i, unsigned short j, t_piece *piece)
 {
-	t_piece_list	*el;
+	t_piece_list	*piece_list_el;
 
-	el = NULL;
-	while (piece)
-	{
-		print_err(ft_itoa((int)piece->y));
-		print_err(", ");
-		print_err(ft_itoa((int)piece->x));
-		print_err("\n");
-		el = piece;
-		piece = piece->next;
-	}
-	print_err("now in reverse:\n");
-	while (el)
-	{
-		print_err(ft_itoa((int)el->y));
-		print_err(", ");
-		print_err(ft_itoa((int)el->x));
-		print_err("\n");
-		el = el->prev;
-	}
+	piece_list_el = \
+		(t_piece_list *)handle_null(malloc(sizeof(t_piece_list)));
+	piece_list_el->next = NULL;
+	piece_list_el->prev = NULL;
+	piece_list_el->x = j;
+	piece_list_el->y = i;
+	if (!piece->list)
+		piece->list = piece_list_el;
+	else
+		add_block(piece->list, piece_list_el);
 }
 
 void	make_list(t_piece *piece)
 {
-	unsigned short i;
-	unsigned short j;
-	unsigned short line;
-	unsigned short col;
-	t_piece_list	*piece_list_el;
+	unsigned short	i;
+	unsigned short	j;
+	unsigned short	line;
+	unsigned short	col;
 
 	line = piece->line;
 	col = piece->col;
@@ -67,17 +57,7 @@ void	make_list(t_piece *piece)
 		while (j < col)
 		{
 			if (piece->piece[(i * col) + j] == '*')
-			{
-				piece_list_el = (t_piece_list *)handle_null(malloc(sizeof(t_piece_list)));
-				piece_list_el->next = NULL;
-				piece_list_el->prev = NULL;
-				piece_list_el->x = j;
-				piece_list_el->y = i;
-				if (!piece->list)
-					piece->list = piece_list_el;
-				else
-					add_block(piece->list, piece_list_el);
-			}
+				handle_new_block(i, j, piece);
 			j++;
 		}
 		i++;
@@ -108,7 +88,6 @@ t_piece	*get_piece(void)
 	piece->col = ft_atoi(&line[6 + nb_len(piece->line)]);
 	ft_strdel(&line);
 	get_lines(piece->line, &piece->piece);
-	//print_fd("piece.txt", piece->piece);
 	make_list(piece);
 	return (piece);
 }

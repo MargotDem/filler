@@ -17,14 +17,11 @@ void	get_player(t_data *data)
 	char	*line;
 
 	line = NULL;
-	printf("yoo\n");
 	if (gnl(0, &line) < 1)
 		handle_error();
-	printf("heyyy\n");
 	data->us = ft_atoi(&line[10]);
 	data->ennemy = (data->us == 1) + 1;
 	ft_strdel(&line);
-	printf("what in the hell nu\n");
 	if (data->us == 1)
 	{
 		data->symbol_us = 'O';

@@ -1,3 +1,5 @@
 gamex5.sh
 resources/ret_leaks.txt
 ret_leaks.txt
+filler.trace
+.gitignore

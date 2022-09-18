@@ -36,7 +36,7 @@ void	print_map(t_data *data)
 {
 	unsigned int	i;
 	unsigned int	j;
-	char	*ptr;
+	char			*ptr;
 
 	i = 0;
 	while (i < data->line)

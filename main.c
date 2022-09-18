@@ -53,64 +53,22 @@ void	free_grid(t_grid_square **grid)
 	}
 }
 
-short	get_map_data2(t_data *data)
-{
-	char	*line;
-	int		ret;
-
-	line = NULL;
-	ret = gnl(0, &line);
-	if (ret == 0)
-		return (0);
-	if (ret < 1)
-	{
-
-		//panic("In player_data: get_map_data: GNL ret", data);
-	}
-	if (strncmp("Plateau", line, ft_strlen("Plateau")) != 0)
-	{
-
-		//panic("In get_map_data: get_map_data: Checking beginning", data);
-	}
-	data->line = ft_atoi(&line[8]);
-	if (data->line < 1)
-	{
-		print_err("YO WHA TTHE FUCK\n");
-		//panic("In get_map_data: get_map_data: line dimension", data);
-	}
-	data->col = ft_atoi(&line[8 + nb_len(data->line)]);
-	if (data->col < 1)
-		//panic("In get_map_data: get_map_data: col dimension", data);
-	ft_strdel(&line);
-
-	return (1);
-}
-
-void	get_map2(t_data *data)
-{
-	skip_line();
-	get_lines(data->line, &data->map);
-}
-
-
 int	main(void)
 {
 	t_data	*data;
 	t_piece	*piece;
-	(void)piece;
 	int		i;
 
 	i = 0;
 	data = init_data();
-
 	get_player(data);
-
 	while (get_map_data(data))
 	{
 		get_map(data);
-
+		data->grid = \
+		(t_grid_square *)handle_null(malloc(sizeof(t_grid_square) \
+		* data->col * data->line));
 		create_grid(data);
-
 		calc_dists(data);
 		piece = get_piece();
 		find_best_move(data, piece);

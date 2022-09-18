@@ -16,8 +16,8 @@ void	place_piece(t_solution *solution)
 {
 	short	i;
 	short	j;
-	char			*str_x;
-	char			*str_y;
+	char	*str_x;
+	char	*str_y;
 
 	i = solution->i - solution->piece_square->y;
 	j = solution->j - solution->piece_square->x;
