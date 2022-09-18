@@ -1,5 +1,7 @@
 gamex5.sh
 resources/ret_leaks.txt
+resources/filler.trace
 ret_leaks.txt
 filler.trace
 .gitignore
+mde-maul.filler

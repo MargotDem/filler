@@ -26,38 +26,11 @@ t_data	*init_data(void)
 	return (data);
 }
 
-void	free_piece(t_piece **piece)
-{
-	t_piece_list	*next;
-
-	if (piece && *piece)
-	{
-		while ((*piece)->list)
-		{
-			next = (*piece)->list->next;
-			free((*piece)->list);
-			(*piece)->list = next;
-		}
-		ft_strdel(&((*piece)->piece));
-		free(*piece);
-		*piece = NULL;
-	}
-}
-
-void	free_grid(t_grid_square **grid)
-{
-	if (grid && *grid)
-	{
-		free(*grid);
-		*grid = NULL;
-	}
-}
-
 int	main(void)
 {
+	int		i;
 	t_data	*data;
 	t_piece	*piece;
-	int		i;
 
 	i = 0;
 	data = init_data();
@@ -78,6 +51,5 @@ int	main(void)
 		i++;
 	}
 	free(data);
-	system("leaks mde-maul.filler > ret_leaks.txt");
 	return (0);
 }

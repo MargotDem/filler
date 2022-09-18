@@ -28,6 +28,7 @@ FILES = main.c				\
 		try_piece.c			\
 		place_piece.c		\
 		create_grid.c		\
+		free.c				\
 
 OBJ_FILES = $(FILES:%.c=%.o)
 

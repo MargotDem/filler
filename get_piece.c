@@ -72,6 +72,8 @@ t_piece	*create_piece(void)
 	ft_bzero(new, sizeof (t_piece));
 	new->line = 0;
 	new->col = 0;
+	new->piece = 0;
+	new->list = 0;
 	return (new);
 }
 

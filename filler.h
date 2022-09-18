@@ -14,9 +14,7 @@
 # define FILLER_H
 
 # include "libft/libft.h"
-# include<unistd.h>
-// delete
-# include <stdio.h>
+# include <unistd.h>
 
 # define US -1
 # define THEM 0
@@ -91,5 +89,7 @@ int		nb_len(int n);
 void	get_lines(unsigned short nb_lines, char **dst);
 void	place_piece(t_solution *solution);
 int		gnl(const int fd, char **line);
+void	free_grid(t_grid_square **grid);
+void	free_piece(t_piece **piece);
 
 #endif

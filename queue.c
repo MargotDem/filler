@@ -42,7 +42,6 @@ void	push_queue(t_queue *queue, t_grid_square *square)
 			tmp[i] = queue->arr[i];
 			i++;
 		}
-		i = 0;
 		free(queue->arr);
 		queue->arr = tmp;
 	}

@@ -22,15 +22,12 @@ void	get_player(t_data *data)
 	data->us = ft_atoi(&line[10]);
 	data->ennemy = (data->us == 1) + 1;
 	ft_strdel(&line);
+	data->symbol_us = 'X';
+	data->symbol_ennemy = 'O';
 	if (data->us == 1)
 	{
 		data->symbol_us = 'O';
 		data->symbol_ennemy = 'X';
-	}
-	else
-	{
-		data->symbol_us = 'X';
-		data->symbol_ennemy = 'O';
 	}
 }
 
@@ -41,7 +38,7 @@ short	get_map_data(t_data *data)
 
 	line = NULL;
 	ret = gnl(0, &line);
-	if (ret == 0)
+	if (!ret)
 		return (0);
 	if (ret < 1)
 		handle_error();
